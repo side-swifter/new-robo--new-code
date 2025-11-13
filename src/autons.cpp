@@ -1,4 +1,12 @@
+#include "autons.hpp"
+#include <cstdlib>
+#include "EZ-Template/PID.hpp"
+#include "EZ-Template/util.hpp"
+#include "liblvgl/llemu.h"
 #include "main.h"
+#include "pros/motors.h"
+#include "pros/rtos.hpp"
+#include "subsystems.hpp"
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -334,7 +342,7 @@ void measure_offsets() {
     chassis.pid_targets_reset();
     chassis.drive_imu_reset();
     chassis.drive_sensor_reset();
-    chassis.drive_brake_set(MOTOR_BRAKE_HOLD);
+    chassis.drive_brake_set(pros::E_MOTOR_BRAKE_HOLD);
     chassis.odom_xyt_set(0_in, 0_in, 0_deg);
     double imu_start = chassis.odom_theta_get();
     double target = i % 2 == 0 ? 90 : 270;  // Switch the turn target every run from 270 to 90
@@ -373,6 +381,307 @@ void measure_offsets() {
   if (chassis.odom_tracker_front != nullptr) chassis.odom_tracker_front->distance_to_center_set(f_offset);
 }
 
-// . . .
-// Make your own autonomous functions here!
-// . . .
+
+
+
+
+
+
+/* old code. 
+void BlueRight() {
+
+  intake.move(127);
+  chassis.pid_odom_set({{0_in, 35_in, 0_deg}, fwd, DRIVE_SPEED});
+  chassis.pid_wait();
+  intake.move(0);
+
+
+  chassis.pid_turn_set(-45_deg, 90);
+  chassis.pid_wait();
+
+
+
+  chassis.pid_drive_set(4_in, 110);
+  chassis.pid_wait();
+  intake.move(-127);
+
+
+
+
+}
+
+
+
+void BlueLeft() {
+
+  intake.move(127);
+  chassis.pid_odom_set({{0_in, 28_in, 0_deg}, fwd, DRIVE_SPEED});
+  chassis.pid_wait();
+  intake.move(0);
+
+
+  chassis.pid_turn_set(225_deg, 90);
+  chassis.pid_wait();
+
+
+
+  chassis.pid_drive_set(-4_in, 110);
+  chassis.pid_wait();
+  intake.move(127);
+
+
+
+
+
+}
+
+
+
+
+void RedRight() {
+
+  intake.move(127);
+  chassis.pid_odom_set({{0_in, 33.4_in, 0_deg}, fwd, DRIVE_SPEED});
+  chassis.pid_wait();
+  intake.move(0);
+
+
+  chassis.pid_turn_set(-135_deg, 90);
+  chassis.pid_wait();
+
+
+
+  chassis.pid_drive_set(-6.7_in, 110);
+  chassis.pid_wait();
+  intake.move(127);
+
+
+
+
+
+}
+
+void RedLeft() {
+
+  intake.move(127);
+  chassis.pid_odom_set({{0_in, 33.2_in, 0_deg}, fwd, DRIVE_SPEED});
+  chassis.pid_wait();
+  intake.move(0);
+
+
+  chassis.pid_turn_set(-45_deg, 90);
+  chassis.pid_wait();
+
+
+
+  chassis.pid_drive_set(6_in, 110);
+  chassis.pid_wait();
+  intake.move(-127);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// we got that skill
+void skills() {
+
+  // first bottom goal
+  intake.move(127);
+  chassis.pid_odom_set({{0_in, 33.4_in, 0_deg}, fwd, DRIVE_SPEED});
+  chassis.pid_wait();
+  intake.move(0);
+
+
+  chassis.pid_turn_set(-45_deg, 90);
+  chassis.pid_wait();
+
+
+
+  chassis.pid_drive_set(4.5_in, 110);
+  chassis.pid_wait();
+  intake.move(-127);
+  pros::delay(2500);
+
+
+  // back up, get balls, and go to second goal
+
+  // back up
+  chassis.pid_drive_set(-6.3,110);
+  chassis.pid_wait();
+
+  // go to second goal
+  intake.move(127);
+
+  chassis.pid_odom_set({{-23.5_in, 33.5_in, -90_deg}, fwd, DRIVE_SPEED});
+  chassis.pid_wait();
+  intake.move(0);
+
+  chassis.pid_turn_set(225,90);
+  chassis.pid_wait();
+
+
+  chassis.pid_drive_set(-4.5_in, 110);
+  chassis.pid_wait();
+
+  intake.move(127);
+
+
+  pros::delay(4500);
+
+  // Done with second goal
+  // going for 3
+
+
+  // get out
+  // get to third goal
+  chassis.pid_drive_set(4.5_in, 110);
+  chassis.pid_wait();
+
+
+
+  // drive to pick up ball
+  intake.move(127);
+  chassis.pid_odom_set({{-23.5_in, 33.5_in, 225_deg}, fwd, DRIVE_SPEED});
+  chassis.pid_turn_set(0,90);
+  intake.move(0);
+  chassis.pid_wait();
+
+
+  // get into the
+  intake.move(127);
+  chassis.pid_drive_set(6_in,110);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(135,90);
+  chassis.pid_drive_set(4.5,90);
+
+  intake.move(-80);
+
+  pros::delay(4500);
+
+
+
+  // get out
+  chassis.pid_drive_set(-5.6_in,110);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-45,0);
+  chassis.pid_wait();
+
+
+
+
+
+
+
+}
+
+
+void nocode(){
+
+}
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void RedRight() { // also known as Blue Right
+
+  // setup
+  chassis.drive_brake_set(pros::E_MOTOR_BRAKE_HOLD);
+
+  // unlead the matchload
+
+  scraper.set(true);
+  chassis.pid_drive_set(13_in, 110);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{18.75_in, -2_in, 180_deg}, fwd, 110});
+  chassis.pid_wait();
+  chassis.pid_drive_set(-1.2_in, 110);
+  chassis.pid_wait();
+  chassis.pid_drive_set(1.3_in, 110);
+  chassis.pid_wait();
+  intake.move(127);
+  pros::delay(4500);
+  intake.move(0);
+  switcher.set(true);
+  
+  // unload
+  chassis.pid_drive_set(-24_in, 110);
+  chassis.pid_wait();
+  hood.set(true);
+  intake.move(127);
+  exitM.move(127);
+  pros::delay(7000);
+
+
+}
+
+
+void RedLeft() { // also known as blue Left
+
+  // setup
+  chassis.drive_brake_set(pros::E_MOTOR_BRAKE_HOLD);
+
+  // unlead the matchload
+
+  scraper.set(true);
+  chassis.pid_drive_set(13_in, 110);
+  chassis.pid_wait();
+  chassis.pid_odom_set({{-18.75_in, -2_in, 180_deg}, fwd, 110});
+  chassis.pid_wait();
+  chassis.pid_drive_set(-1.2_in, 110);
+  chassis.pid_wait();
+  chassis.pid_drive_set(1.3_in, 110);
+  chassis.pid_wait();
+  intake.move(127);
+  pros::delay(4500);
+  intake.move(0);
+  switcher.set(true);
+  
+  // unload
+  chassis.pid_drive_set(-24_in, 110);
+  chassis.pid_wait();
+  hood.set(true);
+  intake.move(127);
+  exitM.move(127);
+  pros::delay(7000);
+
+
+}

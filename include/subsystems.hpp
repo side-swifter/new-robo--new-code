@@ -1,5 +1,7 @@
 #pragma once
 
+#include "EZ-Template/piston.hpp"
+#include "pros/adi.h"
 #include "pros/motor_group.hpp"
 #pragma once
 
@@ -9,4 +11,9 @@
 extern Drive chassis;
 
 // Your motors, sensors, etc. should go here.  Below are examples
-inline pros::MotorGroup intake({-4,-5,-14,15});
+inline pros::MotorGroup intake({-7,8,-9});  // Negative port will reverse the motor 
+inline pros::Motor exitM({10});
+
+inline ez::Piston scraper('H');     
+inline ez::Piston switcher('G');
+inline ez::Piston hood('F');
