@@ -11,7 +11,7 @@
 extern Drive chassis;
 
 // Your motors, sensors, etc. should go here.  Below are examples
-inline pros::MotorGroup intake({-7,8,-9});  // Negative port will reverse the motor 
+inline pros::MotorGroup intake({-7,8,9});  // Negative port will reverse the motor 
 inline pros::Motor exitM({10});
 
 inline ez::Piston scraper('H');     

@@ -115,8 +115,6 @@ void disabled() {
  */
 void competition_initialize() {
   // . . .
-  scraper.set(false);
-  switcher.set(false);
 }
 
 /**

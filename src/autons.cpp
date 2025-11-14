@@ -659,29 +659,45 @@ void RedLeft() { // also known as blue Left
   // setup
   chassis.drive_brake_set(pros::E_MOTOR_BRAKE_HOLD);
 
-  // unlead the matchload
-
-  scraper.set(true);
+  // score main long goal
   chassis.pid_drive_set(13_in, 110);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-18.75_in, -2_in, 180_deg}, fwd, 110});
-  chassis.pid_wait();
-  chassis.pid_drive_set(-1.2_in, 110);
-  chassis.pid_wait();
-  chassis.pid_drive_set(1.3_in, 110);
-  chassis.pid_wait();
-  intake.move(127);
-  pros::delay(4500);
-  intake.move(0);
+  chassis.pid_odom_set({{-19.7_in, 5_in, 180_deg}, fwd, 110});
   switcher.set(true);
-  
-  // unload
-  chassis.pid_drive_set(-24_in, 110);
   chassis.pid_wait();
-  hood.set(true);
   intake.move(127);
   exitM.move(127);
-  pros::delay(7000);
+  chassis.pid_drive_set(-16_in,110);
+  chassis.pid_wait();
+  hood.set(true);
+  chassis.pid_wait();
+  pros::delay(1000);
+
+
+  // get the matchload
+  scraper.set(true);
+  hood.set(false);
+  chassis.pid_drive_set(26.2_in,110);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-0.25_in, 90);
+  chassis.pid_wait();
+  chassis.pid_drive_set(0.25_in, 90);
+  chassis.pid_wait();
+  pros::delay(1000);
+  
+  
+
+  // score
+  chassis.pid_drive_set(-26.5_in,110);
+  chassis.pid_wait();
+  hood.set(true);
+  pros::delay(3000);
+  intake.move(0);
+  exitM.move(0);
+
+
+
+
 
 
 }
