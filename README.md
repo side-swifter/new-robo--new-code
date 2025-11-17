@@ -101,9 +101,9 @@ Adjust mappings in `src/main.cpp` if needed.
 
 ## Assets
 - Place images in `assets/` and use relative links in Markdown.
-  - `assets/logo-robot.png`      ← robot mark (used in header)
+  - `assets/logo.png`            ← robot mark (used in header)
   - `assets/logo-wordmark.png`   ← team name/number wordmark (used in header)
-  - `assets/robot-hero.png`      ← optional hero shot or render of the robot
+  - `assets/robot-hero.png`             ← optional hero shot or render of the robot
 
 > After moving files, GitHub will render the logo and preview automatically.
 
