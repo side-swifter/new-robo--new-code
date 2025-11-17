@@ -83,6 +83,8 @@ void initialize() {
       {"Blue Right\n\n help", RedRight},
       {"Red Left\n\n help", RedLeft},
       {"Blue Left\n\n help", RedLeft},
+      {"Nothing\n\n do nothing", nothing},
+      {"Elite Red Left\n\n help", eliteREDLEFT}
 
 
       

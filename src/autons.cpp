@@ -1,5 +1,6 @@
 #include "autons.hpp"
 #include <cstdlib>
+#include <thread>
 #include "EZ-Template/PID.hpp"
 #include "EZ-Template/util.hpp"
 #include "liblvgl/llemu.h"
@@ -626,43 +627,38 @@ void RedRight() { // also known as Blue Right
   // setup
   chassis.drive_brake_set(pros::E_MOTOR_BRAKE_HOLD);
 
-  // score main long goal
+  // match load
+  intake.move_velocity(0);
+  exitM.move_velocity(0);
+  hood.set(false);
+
   chassis.pid_drive_set(13_in, 110);
   chassis.pid_wait();
-  chassis.pid_odom_set({{19.7_in, 5_in, 180_deg}, fwd, 110});
-  switcher.set(true);
-  chassis.pid_wait();
-  intake.move(127);
-  exitM.move(127);
-  chassis.pid_drive_set(-16_in,110);
-  chassis.pid_wait();
-  hood.set(true);
-  chassis.pid_wait();
-  pros::delay(1000);
-
-
-  // get the matchload
   scraper.set(true);
+  chassis.pid_odom_set({{18.8_in, 5_in, 180_deg}, fwd, 110});
+  chassis.pid_wait();
+  switcher.set(true);
   hood.set(false);
-  chassis.pid_drive_set(26.2_in,95);
-  chassis.pid_wait();
-  chassis.pid_drive_set(-0.25_in, 90);
-  chassis.pid_wait();
-  chassis.pid_drive_set(0.25_in, 90);
-  chassis.pid_wait();
-  pros::delay(1600);
+  intake.move_velocity(200);
+  exitM.move_velocity(200);
+  chassis.pid_drive_set(10_in,110);
+  chassis.pid_wait();;
+  pros::delay(152);
 
-
-  
-  
 
   // score
-  chassis.pid_drive_set(-26.5_in,110);
+  chassis.pid_drive_set(-26.8_in,110);
   chassis.pid_wait();
-  pros::delay(3000);
-  intake.move(0);
-  exitM.move(0);
+  hood.set(true);
+  intake.move_velocity(200);
+  exitM.move_velocity(200);
+  pros::delay(5000);
+
 }
+
+
+
+
 
 
 void RedLeft() { // also known as blue Left
@@ -670,46 +666,101 @@ void RedLeft() { // also known as blue Left
   // setup
   chassis.drive_brake_set(pros::E_MOTOR_BRAKE_HOLD);
 
-  // score main long goal
+  // match load
   chassis.pid_drive_set(13_in, 110);
   chassis.pid_wait();
-  chassis.pid_odom_set({{-19.7_in, 5_in, 180_deg}, fwd, 110});
-  switcher.set(true);
-  chassis.pid_wait();
-  intake.move(127);
-  exitM.move(127);
-  chassis.pid_drive_set(-16_in,110);
-  chassis.pid_wait();
-  hood.set(true);
-  chassis.pid_wait();
-  pros::delay(1000);
-
-
-  // get the matchload
   scraper.set(true);
+  chassis.pid_odom_set({{-17_in, 5_in, 180_deg}, fwd, 110});
+  chassis.pid_wait();
+  switcher.set(true);
   hood.set(false);
-  chassis.pid_drive_set(26.2_in,95);
-  chassis.pid_wait();
-  chassis.pid_drive_set(-0.25_in, 90);
-  chassis.pid_wait();
-  chassis.pid_drive_set(0.25_in, 90);
-  chassis.pid_wait();
-  pros::delay(1600);
+  intake.move_velocity(200);
+  exitM.move_velocity(200);
+  chassis.pid_drive_set(10_in,80);
+  chassis.pid_wait();;
+  pros::delay(112);
 
-
-  
-  
 
   // score
-  chassis.pid_drive_set(-26.5_in,110);
+  chassis.pid_drive_set(-26.8_in,110);
   chassis.pid_wait();
-  pros::delay(3000);
-  intake.move(0);
-  exitM.move(0);
+  hood.set(true);
+  intake.move_velocity(200);
+  exitM.move_velocity(200);
+  pros::delay(1000);
+
+  chassis.pid_drive_set(4_in,95);
+  chassis.pid_wait();
+  hood.set(false);
+  chassis.pid_drive_set(-4_in,110);
+  chassis.pid_wait();
+
+
+  // get the middle
+
+  chassis.pid_drive_set(5_in,110);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(45_deg, 90);
+  chassis.pid_wait();
+
+  intake.move_velocity(200);
+  exitM.move_velocity(200);
+
+  chassis.pid_drive_set(15_in,110);
+  chassis.pid_wait();
+  scraper.set(true);
+
+  chassis.pid_turn_set(-135_deg, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-11_in,90);
+  chassis.pid_wait();
+
+  hood.set(true);
+  pros::delay(2000);
 
 
 
 
+
+
+
+
+
+
+
+
+}
+
+void nothing() {
+  chassis.pid_drive_set(4_in, 110);
+  chassis.pid_wait();
+}
+
+
+
+void eliteREDLEFT() {
+  // get match load
+  switcher.set(true);
+  hood.set(false);
+  scraper.set(true);
+  intake.move_velocity(200);
+  exitM.move_velocity(200);
+chassis.pid_odom_set({{{0_in, 13_in}, fwd, 110},
+                      {{-22.2_in, -4.6_in, 180_deg}, fwd, 110}},
+                      true);
+chassis.pid_wait();
+
+pros::delay(2000);
+
+
+// score in long goal
+switcher.set(true);
+chassis.pid_drive_set(-24.9_in,110);
+chassis.pid_wait();
+hood.set(true);
+pros::delay(3000);
 
 
 }
