@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo-robot.png" alt="Grid Walkers Robot Logo" width="180"/>
+<img src="assets/logo.png" alt="Grid Walkers Robot Logo" width="180"/>
 
 <br/>
 <img src="assets/logo-wordmark.png" alt="Grid Walkers Wordmark" width="420"/>
